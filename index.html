@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WonderKids Puzzle Playground - Fun Interactive Puzzles for Kids</title>
+  <meta name="description" content="A delightful, interactive children's puzzle game featuring jigsaw puzzles, wooden peg sorting, and memory match with colorful graphics and playful sound effects.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="logo-group">
+      <div class="logo-icon">🧩</div>
+      <div class="logo-text">
+        <h1 class="logo-title">WonderPuzzles</h1>
+        <span class="logo-sub">Fun Playground for Kids!</span>
+      </div>
+    </div>
+
+    <!-- Mode Selector Tabs -->
+    <nav class="mode-tabs" aria-label="Game Modes">
+      <button id="mode-jigsaw-btn" class="mode-btn active" data-mode="jigsaw">
+        <span class="btn-emoji">🖼️</span>
+        <span class="btn-text">Picture Jigsaw</span>
+      </button>
+      <button id="mode-pegs-btn" class="mode-btn" data-mode="pegs">
+        <span class="btn-emoji">🦁</span>
+        <span class="btn-text">Animal Pegs</span>
+      </button>
+      <button id="mode-memory-btn" class="mode-btn" data-mode="memory">
+        <span class="btn-emoji">🃏</span>
+        <span class="btn-text">Memory Flip</span>
+      </button>
+    </nav>
+
+    <!-- Sound & Action Toolbar -->
+    <div class="header-tools">
+      <button id="sound-toggle-btn" class="tool-btn" title="Toggle Sound Effects" aria-label="Toggle Sound Effects">
+        <span id="sound-icon">🔊</span>
+        <span class="tool-text">Sound: ON</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Game Container -->
+  <main class="game-main">
+
+    <!-- ================= MODE 1: PICTURE JIGSAW PUZZLE ================= -->
+    <section id="jigsaw-section" class="game-view active-view" aria-labelledby="jigsaw-title">
+      <div class="view-controls-bar">
+        <!-- Theme Chooser -->
+        <div class="control-cluster">
+          <span class="control-label">Choose Picture:</span>
+          <div class="theme-buttons">
+            <button class="theme-btn active" data-theme="safari">🦁 Safari Fun</button>
+            <button class="theme-btn" data-theme="space">🚀 Dino Space</button>
+            <button class="theme-btn" data-theme="ocean">🐬 Ocean Splash</button>
+            <button class="theme-btn" data-theme="farm">🚜 Happy Farm</button>
+          </div>
+        </div>
+
+        <!-- Difficulty Chooser -->
+        <div class="control-cluster">
+          <span class="control-label">Difficulty:</span>
+          <div class="diff-buttons">
+            <button class="diff-btn active" data-grid="2">🐣 2 × 2 (Easy)</button>
+            <button class="diff-btn" data-grid="3">⭐ 3 × 3 (Fun)</button>
+            <button class="diff-btn" data-grid="4">🏆 4 × 4 (Super)</button>
+          </div>
+        </div>
+
+        <!-- Action Helpers -->
+        <div class="control-cluster actions-cluster">
+          <button id="jigsaw-hint-btn" class="action-btn hint-btn" title="Peek at the completed picture">
+            <span>👁️</span> Show Hint
+          </button>
+          <button id="jigsaw-reset-btn" class="action-btn reset-btn" title="Shuffle and start again">
+            <span>🔄</span> Shuffle
+          </button>
+        </div>
+      </div>
+
+      <!-- Puzzle Play Arena -->
+      <div class="jigsaw-arena">
+        <!-- Left: Target Puzzle Board -->
+        <div class="board-column">
+          <div class="board-header">
+            <span class="board-badge">Drop Pieces Here</span>
+            <span id="jigsaw-progress" class="progress-pill">0 of 4 placed</span>
+          </div>
+
+          <div class="jigsaw-frame">
+            <div id="jigsaw-board" class="jigsaw-board">
+              <!-- Grid slots generated dynamically -->
+            </div>
+            <!-- Ghost Hint Overlay -->
+            <div id="jigsaw-ghost" class="jigsaw-ghost"></div>
+          </div>
+        </div>
+
+        <!-- Right: Piece Tray -->
+        <div class="tray-column">
+          <div class="tray-header">
+            <span class="tray-badge">Puzzle Pieces</span>
+            <span class="tray-tip">💡 Drag or tap a piece, then tap its slot!</span>
+          </div>
+          <div id="jigsaw-tray" class="jigsaw-tray">
+            <!-- Scrambled pieces generated dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MODE 2: WOODEN ANIMAL PEG PUZZLE ================= -->
+    <section id="pegs-section" class="game-view" aria-labelledby="pegs-title">
+      <div class="view-controls-bar">
+        <div class="control-cluster">
+          <span class="control-label">Peg Set:</span>
+          <div class="theme-buttons">
+            <button class="peg-theme-btn active" data-peg-set="jungle">🌴 Jungle Friends</button>
+            <button class="peg-theme-btn" data-peg-set="sweets">🧁 Sweet Treats</button>
+            <button class="peg-theme-btn" data-peg-set="vehicles">🚗 Vehicles</button>
+          </div>
+        </div>
+        <div class="control-cluster actions-cluster">
+          <span id="pegs-progress" class="progress-pill">0 of 5 matched</span>
+          <button id="pegs-reset-btn" class="action-btn reset-btn">
+            <span>🔄</span> Play Again
+          </button>
+        </div>
+      </div>
+
+      <!-- Wooden Peg Board Arena -->
+      <div class="pegs-arena">
+        <!-- The Wooden Board with cutouts -->
+        <div class="wood-board-container">
+          <div class="wood-board-rim">
+            <div id="pegs-slots-board" class="wood-board-surface">
+              <!-- Cutout silhouette slots generated dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Loose Pieces Tray -->
+        <div class="pegs-tray-wrapper">
+          <div class="tray-header">
+            <span class="tray-badge">Pick a Piece!</span>
+            <span class="tray-tip">Match each shape to its wooden cutout</span>
+          </div>
+          <div id="pegs-tray" class="pegs-tray">
+            <!-- Draggable wooden peg pieces with cute handles -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MODE 3: ANIMAL MEMORY FLIP ================= -->
+    <section id="memory-section" class="game-view" aria-labelledby="memory-title">
+      <div class="view-controls-bar">
+        <div class="control-cluster">
+          <span class="control-label">Card Count:</span>
+          <div class="diff-buttons">
+            <button class="memory-size-btn active" data-pairs="4">🐣 8 Cards</button>
+            <button class="memory-size-btn" data-pairs="6">⭐ 12 Cards</button>
+            <button class="memory-size-btn" data-pairs="8">🏆 16 Cards</button>
+          </div>
+        </div>
+        <div class="control-cluster actions-cluster">
+          <div class="stats-badge">
+            <span>Moves: <strong id="memory-moves">0</strong></span>
+          </div>
+          <div class="stats-badge">
+            <span>Matches: <strong id="memory-matches">0</strong></span>
+          </div>
+          <button id="memory-reset-btn" class="action-btn reset-btn">
+            <span>🔄</span> New Cards
+          </button>
+        </div>
+      </div>
+
+      <!-- Memory Card Grid -->
+      <div class="memory-arena">
+        <div id="memory-grid" class="memory-grid">
+          <!-- Memory cards generated dynamically -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Celebration Modal (Confetti + Stars + Popping Balloons) -->
+  <div id="win-modal" class="win-modal" aria-hidden="true" role="dialog">
+    <div class="win-backdrop"></div>
+    <div class="win-card">
+      <div class="win-stars">
+        <span class="win-star star-1">⭐</span>
+        <span class="win-star star-2">🌟</span>
+        <span class="win-star star-3">⭐</span>
+      </div>
+      <h2 id="win-title" class="win-title">Hooray! You Did It! 🎉</h2>
+      <p id="win-message" class="win-sub">Awesome job, puzzle master! High five! ✋</p>
+
+      <!-- Fun mini game inside win dialog: pop the floating balloons! -->
+      <div class="balloon-playfield" id="balloon-container" title="Click or tap the balloons to pop them!">
+        <!-- Floating balloons spawn here -->
+      </div>
+      <p class="balloon-tip">🎈 Tap the balloons to pop them!</p>
+
+      <div class="win-actions">
+        <button id="win-replay-btn" class="win-btn primary-win-btn">
+          <span>🔁</span> Play Again!
+        </button>
+        <button id="win-next-btn" class="win-btn secondary-win-btn">
+          <span>✨</span> Next Challenge
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden canvas for generating high-definition puzzle artwork -->
+  <canvas id="art-canvas" width="600" height="600" style="display: none;"></canvas>
+
+  <!-- Audio Synth & Game Logic Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
